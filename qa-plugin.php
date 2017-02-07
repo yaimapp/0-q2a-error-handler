@@ -18,7 +18,9 @@ if (!defined('QA_VERSION')) { // don't allow this page to be requested directly 
 }
 
 define('ERROR_HANDLER_DIR', __DIR__);
-
+if (!defined('ERROR_HANDLER_LANG')) {
+    define('ERROR_HANDLER_LANG', 'ja');
+}
 // language file
 qa_register_plugin_phrases('qa-error-handler-lang-*.php', 'error_handler');
 // overrides
