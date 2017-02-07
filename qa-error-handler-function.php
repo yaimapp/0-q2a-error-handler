@@ -37,7 +37,7 @@ function qa_shutdown_handler()
         }
     }
     if ($isError){
-        echo '<p>エラーが発生しました。時間をおいて再度お試しください。</p>';
+        echo '<p>'.qa_lang('error_handler/error_message').'</p>';
         if (DEBUG) {
             echo qa_error_message($type, $error['message'],$error['file'],$error['line']);
         }
