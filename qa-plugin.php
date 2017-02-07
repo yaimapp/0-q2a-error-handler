@@ -21,6 +21,8 @@ define('ERROR_HANDLER_DIR', __DIR__);
 
 // language file
 qa_register_plugin_phrases('qa-error-handler-lang-*.php', 'error_handler');
+// overrides
+qa_register_plugin_overrides('qa-error-handler-overrides.php');
 
 require_once(ERROR_HANDLER_DIR.'/qa-error-handler-function.php');
 
