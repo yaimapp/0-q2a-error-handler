@@ -65,7 +65,7 @@ if (!isset($pass_failure_type) && qa_clicked('super')) {
 
         qa_set_option('feedback_email', $inemail);
 
-        $success .= qa_lang('error_handler/congratulations');
+        $success .= 'おめでとう！あなたのサイトにQuestion2Answerをインストールできました！！';
     }
 }
 
@@ -95,21 +95,21 @@ if (isset($pass_failure_type)) {
     // this page was requested due to query failure, via the fail handler
     switch ($pass_failure_type) {
         case 'connect':
-            $errorhtml .= qa_lang('error_handler/could_not_establish_db');
+            $errorhtml .= 'データベースに接続できませんでした。時間をおいて再度お試しください。';
             break;
 
         case 'select':
-            $errorhtml .= qa_lang('error_handler/could_not_switch_db');
+            $errorhtml .= 'データベースを切り換えることができませんでした。時間をおいて再度お試しください。';
             break;
 
         case 'query':
             global $pass_failure_from_install;
 
             if (@$pass_failure_from_install) {
-                $errorhtml .= qa_lang('error_handler/unable_instllation_query');
+                $errorhtml .= 'インストールクエリを実行できませんでした。時間をおいて再度お試しください。';
                 $errorhtml .= "\n\n".qa_html($pass_failure_query."\n\nError ".$pass_failure_errno.": ".$pass_failure_error."\n\n");
             } else {
-                $errorhtml .= qa_lang('error_handler/db_query_failed');
+                $errorhtml .= 'クエリを実行できませんでした。時間をおいて再度お試しください。';
             }
             break;
     }
@@ -129,31 +129,31 @@ else {
                 // create link back to WordPress home page
                 qa_db_page_move(qa_db_page_create(get_option('blogname'), QA_PAGE_FLAGS_EXTERNAL, get_option('home'), null, null, null), 'O', 1);
 
-                $success .= qa_lang('error_handler/db_create_integrated_wp');
+                $success .= 'Question2Answerのデータベースは作成され、WordPressサイトと統合されました。';
 
             }
             else {
-                $success .= qa_lang('error_handler/db_create_external_user');
+                $success .= 'Question2Answerのデータベースは外部のユーザー管理のために作成されました。オンラインのドキュメントを読んで統合を完了させてください。';
             }
         }
         else {
-            $success .= qa_lang('error_handler/db_created');
+            $success .= 'Question2Answerのデータベースは作成されました。';
         }
     }
 
     if (qa_clicked('nonuser')) {
         qa_db_install_tables();
-        $success .= qa_lang('error_handler/additional_db_table_created');
+        $success .= '追加のQuestion2Answerデータベーステーブルが作成されました。';
     }
 
     if (qa_clicked('upgrade')) {
         qa_db_upgrade_tables();
-        $success .= 
+        $success .= 'Question2Answerのデータベースが更新されました。';
     }
 
     if (qa_clicked('repair')) {
         qa_db_install_tables();
-        $success .= qa_lang('error_handler/db_repaired');
+        $success .= 'Question2Answerのデータベーステーブルが修復されました。';
     }
 
     if (qa_clicked('module')) {
@@ -172,7 +172,7 @@ else {
                 qa_db_upgrade_query($query);
         }
 
-        $success .= $modulename.' '.$moduletype.
+        $success .= $modulename.' '.$moduletype.' モジュールがデータベースの初期化を完了しました。';
     }
 
 }
@@ -185,21 +185,21 @@ if (qa_db_connection(false) !== null && !@$pass_failure_from_install) {
             if (@$pass_failure_errno == 1146) // don't show error if we're in installation process
                 $errorhtml = '';
 
-            $errorhtml .= qa_lang('error_handler/welcome_q2a');
+            $errorhtml .= 'Question2Answerへようこそ。データベースをセットアップします';
 
             if (QA_FINAL_EXTERNAL_USERS) {
                 if (defined('QA_FINAL_WORDPRESS_INTEGRATE_PATH')) {
-                    $errorhtml .= "\n\n".qa_lang('error_handler/integreted_wp')." <a href=\"".qa_html(get_option('home'))."\" target=\"_blank\">".qa_html(get_option('blogname'))."</a>. ".qa_lang('error_handler/consult_online_document');
+                    $errorhtml .= "\n\n以下をクリックすると、Question2AnswerサイトがWordPressサイトのユーザーと統合するようにセットアップします <a href=\"".qa_html(get_option('home'))."\" target=\"_blank\">".qa_html(get_option('blogname'))."</a> 詳細については、オンラインマニュアルを参照してください。";
                 }
                 else {
-                    $errorhtml .= "\n\n".qa_lang('error_handler/integrate_existing_user');.qa_html(qa_get_mysql_user_column_type())." " .qa_lang('error_handler/consult_online_document');
+                    $errorhtml .= "\n\n以下をクリックすると、Question2Answerサイトが既存のユーザーデータベースと統合されるように設定されます。 ユーザーはデータベースの列で参照されます。".qa_html(qa_get_mysql_user_column_type())." 詳細については、オンラインマニュアルを参照してください。";
                 }
 
-                $buttons = array('create' => qa_lang('error_handler/setup_db'));
+                $buttons = array('create' => 'データベースの設定');
             }
             else {
-                $errorhtml .= "\n\n".qa_lang('error_handler/setup_user_login')."\n\n".qa_lang('error_handler/single_sign_on');
-                $buttons = array('create' => qa_lang('error_handler/setup_db_include_users'));
+                $errorhtml .= "\n\n以下をクリックすると、内部的にユーザーIDとログインを管理するためのQuestion2Answerデータベースがセットアップされます。\n\n既存のユーザーベースまたはWebサイトでシングルサインオンを提供する場合は、先に進む前にオンラインドキュメントを参照してください。";
+                $buttons = array('create' => 'ユーザー管理を含むデータベースの設定');
             }
             break;
 
@@ -209,36 +209,36 @@ if (qa_db_connection(false) !== null && !@$pass_failure_from_install) {
                 $errorhtml = '';
 
             // don't show error before this
-            $errorhtml .= qa_lang('error_handler/old_version');
-            $buttons = array('upgrade' => qa_lang('error_handler/upgrade_db'));
+            $errorhtml .= 'このバージョンでは、Question2Answerデータベースをアップグレードする必要があります。';
+            $buttons = array('upgrade' => 'データベースのアップグレード');
             break;
 
         case 'non-users-missing':
-            $errorhtml = qa_lang('error_handler/non_users_missing');
-            $buttons = array('nonuser' => qa_lang('error_handler/setup_tables'));
+            $errorhtml = "このQuestion2Answerサイトは、別のQ2Aサイトとユーザーを共有していますが、独自のコンテンツ用に追加のデータベーステーブルが必要です。\n\n それらを作成するには、以下をクリックしてください。";
+            $buttons = array('nonuser' => 'テーブルの設定');
             break;
 
         case 'table-missing':
-            $errorhtml .= qa_lang('error_handler/table_missing');
-            $buttons = array('repair' => qa_lang('error_handler/repair_db'));
+            $errorhtml .= 'Question2Answerのデータベースにテーブルがありません。';
+            $buttons = array('repair' => 'データベースを修復');
             break;
 
         case 'column-missing':
-            $errorhtml .= qa_lang('error_handler/column_missing');
-            $buttons = array('repair' => qa_lang('error_handler/repair_db'));
+            $errorhtml .= 'Question2Answerのデータベーステーブルに列がありません。';
+            $buttons = array('repair' => 'データベースを修復する');
             break;
 
         default:
             require_once QA_INCLUDE_DIR.'db/admin.php';
 
             if (!QA_FINAL_EXTERNAL_USERS && qa_db_count_users() == 0) {
-                $errorhtml .= qa_lang('error_handler/no_users');
+                $errorhtml .= '現在、Question2Answerのデータベースにはユーザーはいません。下記の情報を入力して上級管理者を作成してください。';
                 $fields = array(
                     'handle' => array('label' => 'Username:', 'type' => 'text'),
                     'password' => array('label' => 'Password:', 'type' => 'password'),
                     'email' => array('label' => 'Email address:', 'type' => 'text'),
                 );
-                $buttons = array('super' => qa_lang('error_handler/setup_superadmin'));
+                $buttons = array('super' => '上級管理者の設定');
             }
             else {
                 $tables = qa_db_list_tables();
@@ -259,7 +259,7 @@ if (qa_db_connection(false) !== null && !@$pass_failure_from_install) {
                                 '^4' => '',
                             ));
 
-                            $buttons = array('module' => qa_lang('error_handler/init_db'));
+                            $buttons = array('module' => 'データベースの初期化');
 
                             $hidden['moduletype'] = $moduletype;
                             $hidden['modulename'] = $modulename;
@@ -274,9 +274,9 @@ if (qa_db_connection(false) !== null && !@$pass_failure_from_install) {
 
 if (empty($errorhtml)) {
     if (empty($success))
-        $success = qa_lang('error_handler/no_problem');
+        $success = 'Question2Answerのデータベースに問題はありませんでした。';
 
-    $suggest = '<a href="'.qa_path_html('admin', null, null, QA_URL_FORMAT_SAFEST).'">'.qa_lang('error_handler/goto_admin_center').'</a>';
+    $suggest = '<a href="'.qa_path_html('admin', null, null, QA_URL_FORMAT_SAFEST).'">管理センターへ</a>';
 }
 
 ?>
