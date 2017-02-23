@@ -1,0 +1,18 @@
+<dialog id="error-handler-dialog" class="mdl-dialog" style="min-width: 380px;">
+  <h4 ><?php echo qa_lang_html('error_handler/error_message'); ?></h4>
+  <div class="mdl-dialog__actions">
+    <button class="mdl-button close" type="button"><?php echo qa_lang_html('error_handler/close'); ?></button>
+  </div>
+</dialog>
+<script>
+  var dialog = document.querySelector('#error-handler-dialog');
+  if (! dialog.showModal) {
+    dialogPolyfill.registerDialog(dialog);
+  }
+  function qa_ajax_error() {
+    dialog.showModal();
+  }
+  dialog.querySelector('.close').addEventListener('click', function() {
+    dialog.close();
+  });
+</script>

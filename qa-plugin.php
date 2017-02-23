@@ -24,7 +24,9 @@ if (!defined('ERROR_HANDLER_LANG')) {
 // language file
 qa_register_plugin_phrases('qa-error-handler-lang-*.php', 'error_handler');
 // overrides
-qa_register_plugin_overrides('qa-error-handler-overrides.php');
+// qa_register_plugin_overrides('qa-error-handler-overrides.php');
+// layer
+qa_register_plugin_layer('qa-error-handler-layer.php', 'Error Handler Layer');
 
 require_once(ERROR_HANDLER_DIR.'/qa-error-handler-function.php');
 
